@@ -11,6 +11,7 @@ public class MainActivity extends Activity {
 
     private int seconds = 0;
     private boolean running;
+    private boolean wasRunning;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +20,7 @@ public class MainActivity extends Activity {
         if (savedInstanceState != null) {
             seconds = savedInstanceState.getInt("seconds");
             running = savedInstanceState.getBoolean("running");
+            wasRunning = savedInstanceState.getBoolean("wasRunning");
         }
         goTimer();
     }
@@ -28,6 +30,22 @@ public class MainActivity extends Activity {
     public void onSaveInstanceState(Bundle savedInstanceState) {
         savedInstanceState.putInt("seconds", seconds);
         savedInstanceState.putBoolean("running", running);
+        savedInstanceState.putBoolean("wasRunning", wasRunning);
+    }
+    //created method onStop to stop counting when app is not visible
+    @Override
+    protected void onStop() {
+        super.onStop();
+        wasRunning = running;
+        running = false;
+    }
+    //this method if the stopwatch was running, it will continue to run
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (wasRunning) {
+            running = true;
+        }
     }
 
     //This method activate stopwatch when button start is pressed
