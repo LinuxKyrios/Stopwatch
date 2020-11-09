@@ -33,16 +33,36 @@ public class MainActivity extends Activity {
         savedInstanceState.putBoolean("wasRunning", wasRunning);
     }
     //created method onStop to stop counting when app is not visible
-    @Override
+    /*@Override
     protected void onStop() {
         super.onStop();
         wasRunning = running;
         running = false;
-    }
-    //this method if the stopwatch was running, it will continue to run
+    }*/
+
+    //Creating own onPause() method to replace previously created onStop() method
+
     @Override
+    protected void onPause() {
+        super.onPause();
+        wasRunning = running;
+        running = false;
+    }
+
+    //this method if the stopwatch was running, it will continue to run
+    /*@Override
     protected void onStart() {
         super.onStart();
+        if (wasRunning) {
+            running = true;
+        }
+    }
+    */
+
+    //Created own onResume() method to replace previously created onStart() method;
+    @Override
+    protected void onResume() {
+        super.onResume();
         if (wasRunning) {
             running = true;
         }
